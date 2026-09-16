@@ -260,15 +260,7 @@
       <div class="divider"></div>
 
       <div class="calc-grid">
-        <div class="field fixed">
-          <label>Gasto mín. con TC para cubrir 100% del fee · Año 1</label>
-          <input type="text" id="gastoMinAno1" disabled>
-        </div>
-        <div class="field fixed">
-          <label>Gasto mín. con TC para cubrir 100% del fee · Año 2</label>
-          <input type="text" id="gastoMinAno2" disabled>
-        </div>
-        <div class="field fixed">
+        <div class="field fixed" style="max-width:280px;">
           <label>Costo anual de la plataforma</label>
           <input type="text" id="costoPlataforma" disabled>
         </div>
@@ -356,7 +348,7 @@
         </div>
       </div>
       <div style="text-align:center;">
-        <span class="delta-pill">↓ 7,64 puntos porcentuales por debajo de la tasa actual (29,24% EA vs. 21,6% anualizada) · más de 6 puntos</span>
+        <span class="delta-pill">↓ 7,64 puntos porcentuales por debajo de la tasa actual (29,24% EA vs. 21,6% anualizada) · equivalen a <span id="deltaCOP">—</span> de beneficio anual</span>
       </div>
 
       <div class="divider"></div>
@@ -385,19 +377,14 @@
     <table class="diag">
       <tr><th>Variable</th><th>Proveedor actual</th><th class="jv">Con Jeeves</th></tr>
       <tr>
-        <td class="label">Tasa Jeeves Pay / financiamiento a proveedores</td>
-        <td class="old">Referencia de mercado ~29,24% EA</td>
-        <td class="new"><b>1,8% mensual</b> negociado — más de 6 puntos por debajo</td>
+        <td class="label">Pagos y dispersión a proveedores</td>
+        <td class="old">Un solo giro a la cuenta de Nuvant, quien debe dispersar nuevamente a cada proveedor: genera <b>doble 4x1000</b>, toma <b>varios días</b>, con trámites y una <b>tasa más alta</b>. Cobran el mes completo, sin importar los días reales de uso.</td>
+        <td class="new">Transferencias <b>directas desde la plataforma</b> a cada proveedor, <b>sin garantías adicionales</b> — los pagos aplican en <b>segundos</b>, a <b>1,8% mensual</b>, cobrando solo por los días exactos de uso.</td>
       </tr>
       <tr>
         <td class="label">Cashback</td>
-        <td class="old">No aplica</td>
+        <td class="old">0,10%</td>
         <td class="new"><b>1%</b> sobre el gasto mensual, primeros 6 meses</td>
-      </tr>
-      <tr>
-        <td class="label">Gravamen 4x1000 (GMF)</td>
-        <td class="old">Aplica en transferencias y retiros</td>
-        <td class="new"><b>Exento</b> en operaciones con tarjeta</td>
       </tr>
       <tr>
         <td class="label">Trazabilidad y control de gasto</td>
@@ -429,7 +416,7 @@
           <div class="lbl">Disminución de tasa Jeeves Pay<br>29,24% EA → 21,6% anualizada</div>
         </div>
       </div>
-      <p class="cta-line">La línea de <b>USD 1.200.000</b> ya está aprobada. El único paso pendiente es activar tarjetas y Jeeves Pay para que Nuvant empiece a capturar este valor desde el primer mes — sin ese paso, el ahorro y el beneficio de tasa se quedan sobre la mesa.</p>
+      <p class="cta-line">La línea de <b>USD 1.200.000</b> ya está aprobada. El único paso pendiente es firmar contrato y pagaré, luego activar tarjetas y Jeeves Pay para que Nuvant empiece a capturar este valor desde el primer mes — sin ese paso, el ahorro y el beneficio de tasa se quedan sobre la mesa.</p>
     </div>
   </section>
 
@@ -498,12 +485,7 @@ function calc(){
   const roeAno1 = costoPlataforma > 0 ? (netoAno1/costoPlataforma*100) : 0;
   const roeAno2 = costoPlataforma > 0 ? (netoAno2/costoPlataforma*100) : 0;
 
-  const gastoMinAno1 = costoPlataforma / 0.108;
-  const gastoMinAno2 = costoPlataforma / 0.048;
-
   document.getElementById('costoPlataforma').value = fmtCOP(costoPlataforma);
-  document.getElementById('gastoMinAno1').value = fmtCOP(gastoMinAno1) + " / mes";
-  document.getElementById('gastoMinAno2').value = fmtCOP(gastoMinAno2) + " / mes";
 
   document.getElementById('ahorroGMF').textContent = fmtCOP(ahorroGMF);
   document.getElementById('ahorroCashback').textContent = fmtCOP(ahorroCashback);
@@ -541,6 +523,7 @@ function calc(){
   document.getElementById('benDiario').textContent = fmtCOP(benDiario);
   document.getElementById('benMensual').textContent = fmtCOP(benMensual);
   document.getElementById('benAnual').textContent = fmtCOP(benAnual);
+  document.getElementById('deltaCOP').textContent = fmtCOP(benAnual);
 
   // ---- Strategic close ----
   const combinedTotal1 = totalAno1 + benAnual;
