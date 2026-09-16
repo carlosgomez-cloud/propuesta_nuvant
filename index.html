@@ -253,7 +253,8 @@
         </div>
         <div class="field fixed">
           <label>Cashback · primeros 6 meses</label>
-          <input type="text" value="1% del gasto mensual" disabled>
+          <input type="text" value="1% del gasto mensual con tarjeta" disabled>
+          <div class="hint">Aplica únicamente sobre el gasto con tarjeta, no sobre el volumen dispersado vía Jeeves Pay</div>
         </div>
       </div>
 
@@ -305,11 +306,13 @@
           <div class="t">Ahorro total · Primer año</div>
           <div class="v" id="totalAno1">—</div>
           <div class="sub">Menos costo de plataforma (<span id="costoRef1"></span>) = <b id="netoAno1">—</b> neto</div>
+          <div class="sub" id="netoAno1Extra" style="display:none; color:var(--red); border-top:none; padding-top:0;"></div>
         </div>
         <div class="total-card">
           <div class="t">Ahorro total · A partir del segundo año</div>
           <div class="v" id="totalAno2">—</div>
           <div class="sub">Menos costo de plataforma (<span id="costoRef2"></span>) = <b id="netoAno2">—</b> neto</div>
+          <div class="sub" id="netoAno2Extra" style="display:none; color:var(--red); border-top:none; padding-top:0;"></div>
         </div>
       </div>
 
@@ -355,8 +358,8 @@
 
       <div class="calc-grid" style="grid-template-columns:1fr;">
         <div class="field" style="max-width:340px;">
-          <label>Monto mensual a dispersar vía Jeeves Pay (USD)</label>
-          <div class="prefix"><span>$</span><input type="number" id="montoPayUSD" value="900000" step="10000"></div>
+          <label>Monto mensual a dispersar vía Jeeves Pay (COP)</label>
+          <div class="prefix"><span>$</span><input type="number" id="montoPayCOP" value="3000000000" step="10000000"></div>
           <div class="hint">Editable — ajústalo al monto que Nuvant necesite mover mensualmente a proveedores</div>
         </div>
       </div>
@@ -498,6 +501,21 @@ function calc(){
   document.getElementById('netoAno1').textContent = fmtCOP(netoAno1);
   document.getElementById('netoAno2').textContent = fmtCOP(netoAno2);
 
+  const netoAno1ExtraEl = document.getElementById('netoAno1Extra');
+  if(netoAno1 < 0){
+    netoAno1ExtraEl.style.display = 'block';
+    netoAno1ExtraEl.innerHTML = `El cliente debería pagar la diferencia: <b>${fmtCOP(Math.abs(netoAno1)/12)}</b> adicionales por mes`;
+  } else {
+    netoAno1ExtraEl.style.display = 'none';
+  }
+  const netoAno2ExtraEl = document.getElementById('netoAno2Extra');
+  if(netoAno2 < 0){
+    netoAno2ExtraEl.style.display = 'block';
+    netoAno2ExtraEl.innerHTML = `El cliente debería pagar la diferencia: <b>${fmtCOP(Math.abs(netoAno2)/12)}</b> adicionales por mes`;
+  } else {
+    netoAno2ExtraEl.style.display = 'none';
+  }
+
   document.getElementById('roeAno1').textContent = fmtPct(roeAno1,1);
   document.getElementById('roeAno1').style.color = roeAno1 >= 0 ? 'var(--gold)' : 'var(--red)';
   document.getElementById('roeAno2').textContent = fmtPct(roeAno2,1);
@@ -514,8 +532,7 @@ function calc(){
   document.getElementById('tasaActualDiaria').textContent = fmtPct(diariaActual*100, 4);
   document.getElementById('tasaNuevaDiaria').textContent = fmtPct(diariaNueva*100, 4);
 
-  const montoPayUSD = parseFloat(document.getElementById('montoPayUSD').value) || 0;
-  const montoPayCOP = montoPayUSD * trm;
+  const montoPayCOP = parseFloat(document.getElementById('montoPayCOP').value) || 0;
   const benDiario = montoPayCOP * (diariaActual - diariaNueva);
   const benMensual = montoPayCOP * (mensualActual - mensualNueva);
   const benAnual = benMensual * 12;
@@ -533,7 +550,7 @@ function calc(){
   document.getElementById('closeROE').textContent = fmtPct(combinedROE1,1);
 }
 
-document.querySelectorAll('#valorPlan,#trm,#gastoMensual,#salario,#facturas,#minutos,#horas,#montoPayUSD').forEach(el=>{
+document.querySelectorAll('#valorPlan,#trm,#gastoMensual,#salario,#facturas,#minutos,#horas,#montoPayCOP').forEach(el=>{
   el.addEventListener('input', calc);
 });
 document.getElementById('toggleFacturas').addEventListener('click', function(){
