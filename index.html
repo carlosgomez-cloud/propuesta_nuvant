@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jeeves × Nuvant — Propuesta Platinum</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Inter+Tight:wght@600;700;800&display=swap');
+
+  :root{
+    --bg:#0B0B0E; --card:#141418; --card2:#17171C; --line:#26262E;
+    --green:#00D68F; --gold:#C9A84C; --text:#F5F5F7; --muted:#9C9CA6;
+    --red:#E5484D;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased;}
+  h1,h2,h3,.wordmark{font-family:'Inter Tight',sans-serif;}
+  img{max-width:100%; display:block;}
+  a{color:inherit;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+
+  /* ---------- Password gate ---------- */
+  #gate{position:fixed; inset:0; background:var(--bg); display:flex; align-items:center; justify-content:center; z-index:999; padding:24px;}
+  #gate.hidden{display:none;}
+  .gate-card{background:var(--card); border:1px solid var(--line); border-radius:20px; padding:40px 36px; max-width:380px; width:100%; text-align:center;}
+  .gate-logo{display:flex; align-items:center; justify-content:center; gap:10px; margin-bottom:18px;}
+  .gate-logo .lion{font-size:26px;}
+  .gate-logo .wordmark{font-size:22px; font-weight:800; letter-spacing:0.5px;}
+  .gate-card h2{font-size:17px; font-weight:700; margin-bottom:8px;}
+  .gate-card p{color:var(--muted); font-size:14px; line-height:1.5; margin-bottom:22px;}
+  #gate input{width:100%; background:#0F0F13; border:1px solid var(--line); color:var(--text); border-radius:10px; padding:13px 14px; font-size:14px; margin-bottom:14px; outline:none; text-align:center;}
+  #gate input:focus{border-color:var(--green);}
+  #gate button{width:100%; background:var(--green); color:#06231A; border:none; border-radius:10px; padding:13px 14px; font-size:15px; font-weight:700; cursor:pointer;}
+  #gate button:hover{filter:brightness(1.08);}
+  #gate .err{color:var(--red); font-size:13px; margin-top:10px; display:none;}
+
+  #content{display:none;}
+  #content.show{display:block;}
+
+  /* ---------- Header ---------- */
+  header{padding:28px 0 8px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;}
+  .brand{display:flex; align-items:center; gap:9px;}
+  .brand .lion{font-size:22px;}
+  .brand .wordmark{font-size:18px; font-weight:800; letter-spacing:0.5px;}
+  .client-badge{background:#F5F5F7; border-radius:10px; padding:8px 16px; display:flex; align-items:center;}
+  .client-badge img{height:22px;}
+
+  /* ---------- Hero ---------- */
+  .hero{padding:28px 0 40px;}
+  .eyebrow{display:inline-block; color:var(--green); font-size:12.5px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; background:rgba(0,214,143,0.1); border:1px solid rgba(0,214,143,0.25); border-radius:100px; padding:6px 14px; margin-bottom:18px;}
+  .hero h1{font-size:35px; line-height:1.18; font-weight:800; max-width:860px; letter-spacing:-0.5px;}
+  .hero h1 em{color:var(--green); font-style:normal;}
+  .hero p.lead{margin-top:16px; color:var(--muted); font-size:16px; line-height:1.6; max-width:660px;}
+
+  .stat-row{display:flex; gap:14px; flex-wrap:wrap; margin-top:26px;}
+  .stat{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px 20px; min-width:150px; flex:1;}
+  .stat .n{font-size:22px; font-weight:800; font-family:'Inter Tight',sans-serif;}
+  .stat .n.gold{color:var(--gold);}
+  .stat .n.green{color:var(--green);}
+  .stat .l{color:var(--muted); font-size:12.5px; margin-top:4px;}
+
+  .photo-row{display:flex; gap:16px; margin-top:34px; flex-wrap:wrap;}
+  .cc-photo{background:#000; border-radius:16px; overflow:hidden; border:1px solid var(--line); flex-shrink:0;}
+  .cc-photo img{width:100%; height:100%; object-fit:cover; display:block;}
+  .box-we{width:170px; height:220px;}
+  .box-corp{width:250px; height:150px;}
+  .box-virtual{width:230px; height:139px;}
+  .box-pay{width:290px; height:120px;}
+  .cc-cap{font-size:11.5px; color:var(--muted); margin-top:8px; text-align:center;}
+  .cc-col{display:flex; flex-direction:column;}
+
+  /* ---------- Section shell ---------- */
+  section{padding:40px 0;}
+  .section-head{margin-bottom:26px;}
+  .section-head h2{font-size:24px; font-weight:800;}
+  .section-head p{color:var(--muted); font-size:14.5px; margin-top:6px; max-width:640px;}
+
+  /* ---------- Calculator ---------- */
+  .calc-shell{background:var(--card); border:1px solid var(--line); border-radius:20px; padding:30px; }
+  .calc-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
+  @media(max-width:760px){.calc-grid{grid-template-columns:1fr 1fr;}}
+  .field{background:var(--card2); border:1px solid var(--line); border-radius:12px; padding:14px 16px;}
+  .field label{display:block; font-size:12px; color:var(--muted); margin-bottom:8px; font-weight:600;}
+  .field .hint{font-size:10.5px; color:#6f6f79; margin-top:6px; line-height:1.4;}
+  .field input, .field select{width:100%; background:transparent; border:none; color:var(--text); font-size:16px; font-weight:700; outline:none; font-family:'Inter Tight',sans-serif;}
+  .field.fixed{opacity:0.85;}
+  .field.fixed input{color:var(--gold);}
+  .prefix{display:flex; align-items:center; gap:6px;}
+  .prefix span{color:var(--muted); font-size:14px; font-weight:600;}
+
+  .divider{height:1px; background:var(--line); margin:26px 0;}
+
+  .subhead{font-size:13px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:14px;}
+
+  .savings-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px;}
+  @media(max-width:760px){.savings-grid{grid-template-columns:1fr 1fr;}}
+  .save-card{background:var(--card2); border:1px solid var(--line); border-radius:12px; padding:16px 18px;}
+  .save-card .t{font-size:12.5px; color:var(--muted); margin-bottom:8px;}
+  .save-card .v{font-size:19px; font-weight:800; color:var(--green); font-family:'Inter Tight',sans-serif;}
+
+  .totals-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:16px;}
+  @media(max-width:640px){.totals-grid{grid-template-columns:1fr;}}
+  .total-card{background:linear-gradient(160deg,#17211c,#141418); border:1px solid rgba(0,214,143,0.3); border-radius:14px; padding:20px;}
+  .total-card .t{font-size:13px; color:var(--muted); margin-bottom:6px; font-weight:600;}
+  .total-card .v{font-size:27px; font-weight:800; color:var(--green); font-family:'Inter Tight',sans-serif;}
+  .total-card .sub{font-size:12.5px; color:var(--muted); margin-top:8px; padding-top:10px; border-top:1px dashed var(--line);}
+  .total-card .sub b{color:var(--text);}
+
+  .roe-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:20px;}
+  @media(max-width:640px){.roe-grid{grid-template-columns:1fr;}}
+  .roe-card{background:linear-gradient(160deg,#26200f,#141418); border:1px solid rgba(201,168,76,0.35); border-radius:14px; padding:22px; text-align:center;}
+  .roe-card .lbl{font-size:12.5px; color:var(--gold); font-weight:700; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;}
+  .roe-card .val{font-size:38px; font-weight:800; color:var(--gold); font-family:'Inter Tight',sans-serif;}
+  .roe-card .cap{font-size:12px; color:var(--muted); margin-top:6px;}
+
+  .toggle-row{display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;}
+  .toggle-row .th{font-size:14px; font-weight:700;}
+  .switch{position:relative; width:42px; height:24px; background:#2c2c34; border-radius:100px; cursor:pointer; flex-shrink:0;}
+  .switch.on{background:var(--green);}
+  .switch .dot{position:absolute; top:3px; left:3px; width:18px; height:18px; background:#fff; border-radius:50%; transition:left .15s;}
+  .switch.on .dot{left:21px;}
+
+  /* ---------- Jeeves Pay rate module ---------- */
+  .rate-shell{background:linear-gradient(160deg,#131a22,#141418); border:1px solid rgba(56,161,255,0.25); border-radius:16px; padding:26px; margin-top:16px;}
+  .rate-compare{display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:18px; margin:18px 0 22px;}
+  @media(max-width:700px){.rate-compare{grid-template-columns:1fr; }}
+  .rate-box{background:var(--card2); border:1px solid var(--line); border-radius:12px; padding:18px 20px;}
+  .rate-box.old{opacity:0.75;}
+  .rate-box.new{border-color:rgba(0,214,143,0.4);}
+  .rate-box .tag{font-size:11px; text-transform:uppercase; letter-spacing:0.06em; color:var(--muted); font-weight:700; margin-bottom:10px;}
+  .rate-box .ea{font-size:30px; font-weight:800; font-family:'Inter Tight',sans-serif;}
+  .rate-box.old .ea{color:var(--muted);}
+  .rate-box.new .ea{color:var(--green);}
+  .rate-box .rows{margin-top:12px; display:flex; flex-direction:column; gap:5px;}
+  .rate-box .rows div{font-size:12.5px; color:var(--muted); display:flex; justify-content:space-between;}
+  .rate-box .rows b{color:var(--text);}
+  .arrow{font-size:26px; color:var(--gold); text-align:center;}
+  .delta-pill{display:inline-block; background:rgba(201,168,76,0.12); border:1px solid rgba(201,168,76,0.35); color:var(--gold); font-size:13px; font-weight:700; border-radius:100px; padding:8px 16px; margin-top:4px;}
+
+  .benefit-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:20px;}
+  @media(max-width:700px){.benefit-grid{grid-template-columns:1fr;}}
+  .benefit-card{background:var(--card2); border:1px solid var(--line); border-radius:12px; padding:16px 18px; text-align:center;}
+  .benefit-card .t{font-size:12px; color:var(--muted); margin-bottom:8px;}
+  .benefit-card .v{font-size:20px; font-weight:800; color:var(--green); font-family:'Inter Tight',sans-serif;}
+  .benefit-card.hi{border-color:rgba(0,214,143,0.4); background:linear-gradient(160deg,#172119,#17171C);}
+
+  /* ---------- Diagnostic table ---------- */
+  .diag{width:100%; border-collapse:collapse; background:var(--card); border:1px solid var(--line); border-radius:16px; overflow:hidden;}
+  .diag th{background:var(--card2); text-align:left; padding:14px 18px; font-size:12px; text-transform:uppercase; letter-spacing:0.05em; color:var(--muted); font-weight:700;}
+  .diag th.jv{color:var(--green);}
+  .diag td{padding:16px 18px; font-size:14px; border-top:1px solid var(--line); vertical-align:top;}
+  .diag td.label{color:var(--muted); font-weight:600; width:26%;}
+  .diag td.old{color:#c7c7cf;}
+  .diag td.new{color:var(--text); font-weight:600;}
+  .diag td.new b{color:var(--green);}
+
+  /* ---------- Strategic close ---------- */
+  .close-shell{background:linear-gradient(160deg,#1c1a10,#0B0B0E); border:1px solid rgba(201,168,76,0.3); border-radius:22px; padding:40px 32px; text-align:center;}
+  .close-shell h2{font-size:24px; font-weight:800; margin-bottom:10px;}
+  .close-shell p.sub{color:var(--muted); font-size:14.5px; max-width:560px; margin:0 auto 30px;}
+  .close-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
+  @media(max-width:760px){.close-grid{grid-template-columns:1fr;}}
+  .close-card{background:rgba(255,255,255,0.03); border:1px solid rgba(201,168,76,0.25); border-radius:16px; padding:26px 18px;}
+  .close-card .ico{font-size:22px; margin-bottom:10px;}
+  .close-card .big{font-size:30px; font-weight:800; color:var(--gold); font-family:'Inter Tight',sans-serif; line-height:1.15;}
+  .close-card .lbl{font-size:12.5px; color:var(--muted); margin-top:10px; line-height:1.4;}
+  .cta-line{margin-top:30px; font-size:15px; color:var(--text); font-weight:600; max-width:600px; margin-left:auto; margin-right:auto; line-height:1.6;}
+  .cta-line b{color:var(--green);}
+
+  footer{padding:44px 0 60px; text-align:center;}
+  .sig{display:inline-block; text-align:left; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:18px 24px;}
+  .sig .name{font-weight:700; font-size:15px;}
+  .sig .role{color:var(--muted); font-size:13px; margin-top:2px;}
+  .sig .mail{color:var(--green); font-size:13px; margin-top:6px;}
+  .assumptions{max-width:720px; margin:26px auto 0; color:#6f6f79; font-size:11.5px; line-height:1.6; text-align:center;}
+</style>
+</head>
+<body>
+
+<!-- ============ PASSWORD GATE ============ -->
+<div id="gate">
+  <div class="gate-card">
+    <div class="gate-logo"><span class="lion">🦁</span><span class="wordmark">JEEVES</span></div>
+    <h2>Propuesta privada</h2>
+    <p>Ingresa la clave que te compartimos por correo para ver tu propuesta.</p>
+    <input type="password" id="gate-input" placeholder="Clave de acceso" autocomplete="off">
+    <button id="gate-btn">Entrar</button>
+    <div class="err" id="gate-err">Clave incorrecta, intenta de nuevo.</div>
+  </div>
+</div>
+
+<!-- ============ CONTENT ============ -->
+<div id="content">
+<div class="wrap">
+
+  <header>
+    <div class="brand"><span class="lion">🦁</span><span class="wordmark">JEEVES</span></div>
+    <div class="client-badge"><img src="nuvant-logo.png" alt="Nuvant"></div>
+  </header>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <span class="eyebrow">Propuesta Platinum · Nuvant S.A.S.</span>
+    <h1>Una línea de <em>USD 1.200.000</em> para tarjetas corporativas y pagos a proveedores con dispersión a cuentas vía Jeeves Pay.</h1>
+    <p class="lead">Con la línea ya aprobada, Nuvant puede migrar el uso que hoy tiene con su proveedor actual (~USD 300.000 mensuales en tarjetas) hacia una plataforma centralizada, con cashback, trazabilidad total por usuario y una tasa preferencial en Jeeves Pay para pagos a proveedores.</p>
+
+    <div class="stat-row">
+      <div class="stat"><div class="n gold">USD 1.2M</div><div class="l">Línea de crédito aprobada</div></div>
+      <div class="stat"><div class="n">30</div><div class="l">Usuarios habilitados</div></div>
+      <div class="stat"><div class="n">Platinum</div><div class="l">Plan negociado</div></div>
+      <div class="stat"><div class="n green">USD 300k</div><div class="l">Uso mensual actual en tarjetas (otro proveedor)</div></div>
+    </div>
+
+    <div class="photo-row">
+      <div class="cc-col"><div class="cc-photo box-we"><img src="jeeves-card-world-elite.png" alt="Tarjeta World Elite Jeeves"></div><div class="cc-cap">World Elite Mastercard</div></div>
+      <div class="cc-col"><div class="cc-photo box-corp"><img src="jeeves-card-corporate.png" alt="Tarjeta corporativa Jeeves"></div><div class="cc-cap">Tarjeta Corporativa</div></div>
+      <div class="cc-col"><div class="cc-photo box-virtual"><img src="jeeves-card-virtual.png" alt="Tarjeta virtual Jeeves"></div><div class="cc-cap">Tarjeta Virtual</div></div>
+      <div class="cc-col"><div class="cc-photo box-pay"><img src="jeeves-pay-proveedores.png" alt="Jeeves Pay dispersión a proveedores"></div><div class="cc-cap">Jeeves Pay · Dispersión a proveedores</div></div>
+    </div>
+  </section>
+
+  <!-- ===== CALCULATOR ===== -->
+  <section id="calculadora">
+    <div class="section-head">
+      <h2>Calculadora económica</h2>
+      <p>Ajusta los campos para ver el ahorro y el ROE de Nuvant frente al costo del plan Platinum.</p>
+    </div>
+
+    <div class="calc-shell">
+      <div class="subhead">Parámetros del plan</div>
+      <div class="calc-grid">
+        <div class="field fixed">
+          <label>Plan de la plataforma</label>
+          <input type="text" value="Platinum" disabled>
+        </div>
+        <div class="field">
+          <label>Valor anual del plan (USD)</label>
+          <div class="prefix"><span>$</span><input type="number" id="valorPlan" value="24000" step="500"></div>
+        </div>
+        <div class="field">
+          <label>TRM del día (COP/USD)</label>
+          <div class="prefix"><span>$</span><input type="number" id="trm" value="3100.45" step="0.01"></div>
+          <div class="hint">Banco de la República · 16 sep 2026</div>
+        </div>
+        <div class="field">
+          <label>Gasto mensual en tarjetas (COP)</label>
+          <div class="prefix"><span>$</span><input type="number" id="gastoMensual" value="1000000000" step="10000000"></div>
+          <div class="hint">Supuesto de referencia · ajustable según el volumen real que Nuvant migre</div>
+        </div>
+        <div class="field fixed">
+          <label>Gravamen 4x1000 (GMF)</label>
+          <input type="text" id="gmfPct" value="0,4% del volumen anual" disabled>
+        </div>
+        <div class="field fixed">
+          <label>Cashback · primeros 6 meses</label>
+          <input type="text" value="1% del gasto mensual" disabled>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="calc-grid">
+        <div class="field fixed">
+          <label>Gasto mín. con TC para cubrir 100% del fee · Año 1</label>
+          <input type="text" id="gastoMinAno1" disabled>
+        </div>
+        <div class="field fixed">
+          <label>Gasto mín. con TC para cubrir 100% del fee · Año 2</label>
+          <input type="text" id="gastoMinAno2" disabled>
+        </div>
+        <div class="field fixed">
+          <label>Costo anual de la plataforma</label>
+          <input type="text" id="costoPlataforma" disabled>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="toggle-row">
+        <div class="th">🧾 Ahorro por automatización de facturas</div>
+        <div class="switch on" id="toggleFacturas"><div class="dot"></div></div>
+      </div>
+      <div class="calc-grid" id="facturasFields">
+        <div class="field">
+          <label>Salario mensual operativo (COP)</label>
+          <div class="prefix"><span>$</span><input type="number" id="salario" value="3500000" step="100000"></div>
+        </div>
+        <div class="field">
+          <label>Facturas procesadas al mes</label>
+          <input type="number" id="facturas" value="200" step="10">
+        </div>
+        <div class="field">
+          <label>Minutos por factura (captura manual)</label>
+          <input type="number" id="minutos" value="8" step="1">
+        </div>
+        <div class="field">
+          <label>Horas trabajadas al mes</label>
+          <input type="number" id="horas" value="160" step="1">
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="subhead">Ahorros por rubro · Anual</div>
+      <div class="savings-grid">
+        <div class="save-card"><div class="t">Exención GMF (4x1000)</div><div class="v" id="ahorroGMF">—</div></div>
+        <div class="save-card"><div class="t">Cashback (año 1, 1% · 6 meses)</div><div class="v" id="ahorroCashback">—</div></div>
+        <div class="save-card"><div class="t">Automatización de facturas</div><div class="v" id="ahorroFacturas">—</div></div>
+      </div>
+
+      <div class="totals-grid">
+        <div class="total-card">
+          <div class="t">Ahorro total · Primer año</div>
+          <div class="v" id="totalAno1">—</div>
+          <div class="sub">Menos costo de plataforma (<span id="costoRef1"></span>) = <b id="netoAno1">—</b> neto</div>
+        </div>
+        <div class="total-card">
+          <div class="t">Ahorro total · A partir del segundo año</div>
+          <div class="v" id="totalAno2">—</div>
+          <div class="sub">Menos costo de plataforma (<span id="costoRef2"></span>) = <b id="netoAno2">—</b> neto</div>
+        </div>
+      </div>
+
+      <div class="roe-grid">
+        <div class="roe-card"><div class="lbl">🏆 ROE · Uso con tarjeta · Año 1</div><div class="val" id="roeAno1">—</div></div>
+        <div class="roe-card"><div class="lbl">🏆 ROE · Uso con tarjeta · Año 2 en adelante</div><div class="val" id="roeAno2">—</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== JEEVES PAY RATE BENEFIT ===== -->
+  <section id="jeeves-pay">
+    <div class="section-head">
+      <h2>Beneficio por disminución de tasa · Jeeves Pay</h2>
+      <p>Para los pagos a proveedores que Nuvant dispersa vía Jeeves Pay, conseguimos bajar la tasa mensual a <b style="color:var(--text)">1,8% mensual</b>, más de 6 puntos porcentuales por debajo de la tasa anualizada equivalente que se paga hoy.</p>
+    </div>
+
+    <div class="calc-shell">
+      <div class="rate-compare">
+        <div class="rate-box old">
+          <div class="tag">Tasa actual</div>
+          <div class="ea">29,24% EA</div>
+          <div class="rows">
+            <div><span>Mensual equivalente</span><b id="tasaActualMensual">—</b></div>
+            <div><span>Diaria equivalente</span><b id="tasaActualDiaria">—</b></div>
+          </div>
+        </div>
+        <div class="arrow">→</div>
+        <div class="rate-box new">
+          <div class="tag">Tasa negociada Jeeves Pay</div>
+          <div class="ea">1,8% mensual</div>
+          <div class="rows">
+            <div><span>Anualizada (nominal)</span><b>21,6%</b></div>
+            <div><span>Diaria equivalente</span><b id="tasaNuevaDiaria">—</b></div>
+          </div>
+        </div>
+      </div>
+      <div style="text-align:center;">
+        <span class="delta-pill">↓ 7,64 puntos porcentuales por debajo de la tasa actual (29,24% EA vs. 21,6% anualizada) · más de 6 puntos</span>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="calc-grid" style="grid-template-columns:1fr;">
+        <div class="field" style="max-width:340px;">
+          <label>Monto mensual a dispersar vía Jeeves Pay (USD)</label>
+          <div class="prefix"><span>$</span><input type="number" id="montoPayUSD" value="900000" step="10000"></div>
+          <div class="hint">Editable — ajústalo al monto que Nuvant necesite mover mensualmente a proveedores</div>
+        </div>
+      </div>
+
+      <div class="benefit-grid">
+        <div class="benefit-card"><div class="t">Beneficio diario</div><div class="v" id="benDiario">—</div></div>
+        <div class="benefit-card"><div class="t">Beneficio mensual</div><div class="v" id="benMensual">—</div></div>
+        <div class="benefit-card hi"><div class="t">Beneficio anual</div><div class="v" id="benAnual">—</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== DIAGNOSTIC ===== -->
+  <section id="diagnostico">
+    <div class="section-head">
+      <h2>Diagnóstico: proveedor actual vs. Jeeves</h2>
+    </div>
+    <table class="diag">
+      <tr><th>Variable</th><th>Proveedor actual</th><th class="jv">Con Jeeves</th></tr>
+      <tr>
+        <td class="label">Tasa Jeeves Pay / financiamiento a proveedores</td>
+        <td class="old">Referencia de mercado ~29,24% EA</td>
+        <td class="new"><b>1,8% mensual</b> negociado — más de 6 puntos por debajo</td>
+      </tr>
+      <tr>
+        <td class="label">Cashback</td>
+        <td class="old">No aplica</td>
+        <td class="new"><b>1%</b> sobre el gasto mensual, primeros 6 meses</td>
+      </tr>
+      <tr>
+        <td class="label">Gravamen 4x1000 (GMF)</td>
+        <td class="old">Aplica en transferencias y retiros</td>
+        <td class="new"><b>Exento</b> en operaciones con tarjeta</td>
+      </tr>
+      <tr>
+        <td class="label">Trazabilidad y control de gasto</td>
+        <td class="old">Limitada, sin control por usuario</td>
+        <td class="new">Plataforma centralizada, <b>30 usuarios</b>, tarjetas físicas y virtuales, límites configurables</td>
+      </tr>
+    </table>
+  </section>
+
+  <!-- ===== STRATEGIC CLOSE ===== -->
+  <section id="cierre">
+    <div class="close-shell">
+      <h2>El valor de activar Nuvant con Jeeves</h2>
+      <p class="sub">Con la línea de USD 1.2M ya aprobada, esto es lo que Nuvant captura al activar tarjetas corporativas y Jeeves Pay.</p>
+      <div class="close-grid">
+        <div class="close-card">
+          <div class="ico">💰</div>
+          <div class="big" id="closeAhorro">—</div>
+          <div class="lbl">Ahorro + beneficio total estimado · Año 1<br>(tarjeta + disminución de tasa Jeeves Pay)</div>
+        </div>
+        <div class="close-card">
+          <div class="ico">📈</div>
+          <div class="big" id="closeROE">—</div>
+          <div class="lbl">ROE combinado · Año 1<br>frente al costo del plan Platinum</div>
+        </div>
+        <div class="close-card">
+          <div class="ico">⬇️</div>
+          <div class="big">7,64 pts</div>
+          <div class="lbl">Disminución de tasa Jeeves Pay<br>29,24% EA → 21,6% anualizada</div>
+        </div>
+      </div>
+      <p class="cta-line">La línea de <b>USD 1.200.000</b> ya está aprobada. El único paso pendiente es activar tarjetas y Jeeves Pay para que Nuvant empiece a capturar este valor desde el primer mes — sin ese paso, el ahorro y el beneficio de tasa se quedan sobre la mesa.</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="sig">
+      <div class="name">Carlos Andrés Gómez Cuartas</div>
+      <div class="role">Senior Enterprise Account Executive · Jeeves Colombia</div>
+      <div class="mail">carlos.gomez@tryjeeves.com</div>
+    </div>
+    <p class="assumptions">Cifras de referencia calculadas sobre los supuestos indicados en cada campo (editables). TRM y gasto mensual en tarjetas son supuestos ajustables — no confirmados formalmente con Nuvant. El módulo de automatización de facturas usa valores estándar de referencia (salario, facturas/mes, minutos por factura, horas trabajadas) y puede desactivarse. Propuesta preparada para uso interno de Nuvant S.A.S., no constituye una oferta vinculante.</p>
+  </footer>
+
+</div>
+</div>
+
+<script>
+const GATE_PASSWORD = "Nuvant2026";
+
+document.getElementById('gate-btn').addEventListener('click', tryUnlock);
+document.getElementById('gate-input').addEventListener('keydown', e => { if(e.key === 'Enter') tryUnlock(); });
+
+function tryUnlock(){
+  const val = document.getElementById('gate-input').value.trim();
+  if(val === GATE_PASSWORD){
+    document.getElementById('gate').classList.add('hidden');
+    document.getElementById('content').classList.add('show');
+  } else {
+    document.getElementById('gate-err').style.display = 'block';
+  }
+}
+
+function fmtCOP(n){
+  const rounded = Math.round(n);
+  return (rounded<0? "-$" : "$") + Math.abs(rounded).toLocaleString('es-CO');
+}
+function fmtPct(n, dec=2){
+  return n.toFixed(dec).replace('.', ',') + '%';
+}
+
+function calc(){
+  const valorPlan = parseFloat(document.getElementById('valorPlan').value) || 0;
+  const trm = parseFloat(document.getElementById('trm').value) || 0;
+  const gastoMensual = parseFloat(document.getElementById('gastoMensual').value) || 0;
+  const costoPlataforma = valorPlan * trm;
+
+  const volumenAnual = gastoMensual * 12;
+  const ahorroGMF = volumenAnual * 0.004;
+  const ahorroCashback = gastoMensual * 6 * 0.01;
+
+  const facturasOn = document.getElementById('toggleFacturas').classList.contains('on');
+  let ahorroFacturas = 0;
+  if(facturasOn){
+    const salario = parseFloat(document.getElementById('salario').value) || 0;
+    const facturas = parseFloat(document.getElementById('facturas').value) || 0;
+    const minutos = parseFloat(document.getElementById('minutos').value) || 0;
+    const horas = parseFloat(document.getElementById('horas').value) || 1;
+    const costoHora = salario / horas;
+    const horasCapturaMes = facturas * (minutos/60);
+    ahorroFacturas = horasCapturaMes * costoHora * 12;
+  }
+
+  const totalAno1 = ahorroGMF + ahorroCashback + ahorroFacturas;
+  const totalAno2 = ahorroGMF + ahorroFacturas;
+  const netoAno1 = totalAno1 - costoPlataforma;
+  const netoAno2 = totalAno2 - costoPlataforma;
+  const roeAno1 = costoPlataforma > 0 ? (netoAno1/costoPlataforma*100) : 0;
+  const roeAno2 = costoPlataforma > 0 ? (netoAno2/costoPlataforma*100) : 0;
+
+  const gastoMinAno1 = costoPlataforma / 0.108;
+  const gastoMinAno2 = costoPlataforma / 0.048;
+
+  document.getElementById('costoPlataforma').value = fmtCOP(costoPlataforma);
+  document.getElementById('gastoMinAno1').value = fmtCOP(gastoMinAno1) + " / mes";
+  document.getElementById('gastoMinAno2').value = fmtCOP(gastoMinAno2) + " / mes";
+
+  document.getElementById('ahorroGMF').textContent = fmtCOP(ahorroGMF);
+  document.getElementById('ahorroCashback').textContent = fmtCOP(ahorroCashback);
+  document.getElementById('ahorroFacturas').textContent = facturasOn ? fmtCOP(ahorroFacturas) : "Desactivado";
+
+  document.getElementById('totalAno1').textContent = fmtCOP(totalAno1);
+  document.getElementById('totalAno2').textContent = fmtCOP(totalAno2);
+  document.getElementById('costoRef1').textContent = fmtCOP(costoPlataforma);
+  document.getElementById('costoRef2').textContent = fmtCOP(costoPlataforma);
+  document.getElementById('netoAno1').textContent = fmtCOP(netoAno1);
+  document.getElementById('netoAno2').textContent = fmtCOP(netoAno2);
+
+  document.getElementById('roeAno1').textContent = fmtPct(roeAno1,1);
+  document.getElementById('roeAno1').style.color = roeAno1 >= 0 ? 'var(--gold)' : 'var(--red)';
+  document.getElementById('roeAno2').textContent = fmtPct(roeAno2,1);
+  document.getElementById('roeAno2').style.color = roeAno2 >= 0 ? 'var(--gold)' : 'var(--red)';
+
+  // ---- Jeeves Pay rate benefit ----
+  const eaActual = 0.2924;
+  const mensualActual = Math.pow(1+eaActual, 1/12) - 1;
+  const diariaActual = Math.pow(1+eaActual, 1/365) - 1;
+  const mensualNueva = 0.018;
+  const diariaNueva = Math.pow(1+mensualNueva, 1/30) - 1;
+
+  document.getElementById('tasaActualMensual').textContent = fmtPct(mensualActual*100);
+  document.getElementById('tasaActualDiaria').textContent = fmtPct(diariaActual*100, 4);
+  document.getElementById('tasaNuevaDiaria').textContent = fmtPct(diariaNueva*100, 4);
+
+  const montoPayUSD = parseFloat(document.getElementById('montoPayUSD').value) || 0;
+  const montoPayCOP = montoPayUSD * trm;
+  const benDiario = montoPayCOP * (diariaActual - diariaNueva);
+  const benMensual = montoPayCOP * (mensualActual - mensualNueva);
+  const benAnual = benMensual * 12;
+
+  document.getElementById('benDiario').textContent = fmtCOP(benDiario);
+  document.getElementById('benMensual').textContent = fmtCOP(benMensual);
+  document.getElementById('benAnual').textContent = fmtCOP(benAnual);
+
+  // ---- Strategic close ----
+  const combinedTotal1 = totalAno1 + benAnual;
+  const combinedNeto1 = combinedTotal1 - costoPlataforma;
+  const combinedROE1 = costoPlataforma > 0 ? (combinedNeto1/costoPlataforma*100) : 0;
+  document.getElementById('closeAhorro').textContent = fmtCOP(combinedTotal1);
+  document.getElementById('closeROE').textContent = fmtPct(combinedROE1,1);
+}
+
+document.querySelectorAll('#valorPlan,#trm,#gastoMensual,#salario,#facturas,#minutos,#horas,#montoPayUSD').forEach(el=>{
+  el.addEventListener('input', calc);
+});
+document.getElementById('toggleFacturas').addEventListener('click', function(){
+  this.classList.toggle('on');
+  document.getElementById('facturasFields').style.opacity = this.classList.contains('on') ? '1' : '0.4';
+  calc();
+});
+
+calc();
+</script>
+
+</body>
+</html>
