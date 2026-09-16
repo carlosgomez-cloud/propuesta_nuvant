@@ -306,13 +306,11 @@
           <div class="t">Ahorro total · Primer año</div>
           <div class="v" id="totalAno1">—</div>
           <div class="sub">Menos costo de plataforma (<span id="costoRef1"></span>) = <b id="netoAno1">—</b> neto</div>
-          <div class="sub" id="netoAno1Extra" style="display:none; color:var(--red); border-top:none; padding-top:0;"></div>
         </div>
         <div class="total-card">
           <div class="t">Ahorro total · A partir del segundo año</div>
           <div class="v" id="totalAno2">—</div>
           <div class="sub">Menos costo de plataforma (<span id="costoRef2"></span>) = <b id="netoAno2">—</b> neto</div>
-          <div class="sub" id="netoAno2Extra" style="display:none; color:var(--red); border-top:none; padding-top:0;"></div>
         </div>
       </div>
 
@@ -369,6 +367,10 @@
         <div class="benefit-card"><div class="t">Beneficio mensual</div><div class="v" id="benMensual">—</div></div>
         <div class="benefit-card hi"><div class="t">Beneficio anual</div><div class="v" id="benAnual">—</div></div>
       </div>
+
+      <div style="margin-top:18px; background:rgba(0,214,143,0.08); border:1px solid rgba(0,214,143,0.25); border-radius:12px; padding:16px 18px; font-size:13px; color:var(--muted); line-height:1.6;">
+        <b style="color:var(--green)">Sin comisión de disponibilidad:</b> en la banca tradicional colombiana es práctica común cobrar a las empresas una comisión de disponibilidad (o de compromiso) sobre el cupo <b style="color:var(--text)">no utilizado</b> de una línea de crédito rotativa — un cargo periódico solo por tener los recursos reservados, independiente de si se usan o no. <b style="color:var(--text)">Jeeves no cobra esta comisión:</b> Nuvant no paga nada por tener la línea de USD 1.200.000 disponible; el único costo es la tasa negociada de 1,8% mensual sobre lo que efectivamente dispersa vía Jeeves Pay.
+      </div>
     </div>
   </section>
 
@@ -395,6 +397,34 @@
         <td class="new">Plataforma centralizada, <b>30 usuarios</b>, tarjetas físicas y virtuales, límites configurables</td>
       </tr>
     </table>
+  </section>
+
+  <!-- ===== CREDIT COMMITTEE CONDITIONS ===== -->
+  <section id="condiciones">
+    <div class="section-head">
+      <h2>Condicionamientos del comité de crédito</h2>
+      <p>La aprobación de la línea de USD 1.200.000 está sujeta al cumplimiento de las siguientes condiciones definidas por el comité de crédito de Jeeves.</p>
+    </div>
+    <div class="calc-shell">
+      <div class="savings-grid" style="grid-template-columns:repeat(2,1fr);">
+        <div class="save-card">
+          <div class="t">(i) Pagaré con garantía parent</div>
+          <div class="v" style="font-size:14px; font-weight:700; color:var(--text);">Garante: <b style="color:var(--green)">Latin-American Investors Ltd.</b></div>
+        </div>
+        <div class="save-card">
+          <div class="t">(ii) Conexión DIAN</div>
+          <div class="v" style="font-size:14px; font-weight:700; color:var(--text);">Verificación de información tributaria</div>
+        </div>
+        <div class="save-card">
+          <div class="t">(iii) Suscripción Platinum</div>
+          <div class="v" style="font-size:14px; font-weight:700; color:var(--text);">Plan Platinum activo (USD 24.000/año)</div>
+        </div>
+        <div class="save-card">
+          <div class="t">(iv) Contrato de uso (70%)</div>
+          <div class="v" style="font-size:14px; font-weight:700; color:var(--text);">Compromiso de uso mínimo del 70% de la línea aprobada</div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- ===== STRATEGIC CLOSE ===== -->
@@ -500,21 +530,6 @@ function calc(){
   document.getElementById('costoRef2').textContent = fmtCOP(costoPlataforma);
   document.getElementById('netoAno1').textContent = fmtCOP(netoAno1);
   document.getElementById('netoAno2').textContent = fmtCOP(netoAno2);
-
-  const netoAno1ExtraEl = document.getElementById('netoAno1Extra');
-  if(netoAno1 < 0){
-    netoAno1ExtraEl.style.display = 'block';
-    netoAno1ExtraEl.innerHTML = `El cliente debería pagar la diferencia: <b>${fmtCOP(Math.abs(netoAno1)/12)}</b> adicionales por mes`;
-  } else {
-    netoAno1ExtraEl.style.display = 'none';
-  }
-  const netoAno2ExtraEl = document.getElementById('netoAno2Extra');
-  if(netoAno2 < 0){
-    netoAno2ExtraEl.style.display = 'block';
-    netoAno2ExtraEl.innerHTML = `El cliente debería pagar la diferencia: <b>${fmtCOP(Math.abs(netoAno2)/12)}</b> adicionales por mes`;
-  } else {
-    netoAno2ExtraEl.style.display = 'none';
-  }
 
   document.getElementById('roeAno1').textContent = fmtPct(roeAno1,1);
   document.getElementById('roeAno1').style.color = roeAno1 >= 0 ? 'var(--gold)' : 'var(--red)';
