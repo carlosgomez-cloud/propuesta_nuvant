@@ -24,7 +24,7 @@
   #gate.hidden{display:none;}
   .gate-card{background:var(--card); border:1px solid var(--line); border-radius:20px; padding:40px 36px; max-width:380px; width:100%; text-align:center;}
   .gate-logo{display:flex; align-items:center; justify-content:center; gap:10px; margin-bottom:18px;}
-  .gate-logo .lion{font-size:26px;}
+  .gate-logo .lion svg{width:26px; height:26px; display:block;}
   .gate-logo .wordmark{font-size:22px; font-weight:800; letter-spacing:0.5px;}
   .gate-card h2{font-size:17px; font-weight:700; margin-bottom:8px;}
   .gate-card p{color:var(--muted); font-size:14px; line-height:1.5; margin-bottom:22px;}
@@ -40,7 +40,7 @@
   /* ---------- Header ---------- */
   header{padding:28px 0 8px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;}
   .brand{display:flex; align-items:center; gap:9px;}
-  .brand .lion{font-size:22px;}
+  .brand .lion svg{width:22px; height:22px; display:block;}
   .brand .wordmark{font-size:18px; font-weight:800; letter-spacing:0.5px;}
   .client-badge{background:#F5F5F7; border-radius:10px; padding:8px 16px; display:flex; align-items:center;}
   .client-badge img{height:22px;}
@@ -180,7 +180,7 @@
 <!-- ============ PASSWORD GATE ============ -->
 <div id="gate">
   <div class="gate-card">
-    <div class="gate-logo"><span class="lion">🦁</span><span class="wordmark">JEEVES</span></div>
+    <div class="gate-logo"><span class="lion"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 348.98 348.98"><circle cx="174.49" cy="174.49" r="174.49" fill="#020202"/><g fill="#c2ab6d"><path d="m149.3,178.61h50.39l-7.39-55.71c18.18-1.74,36.37-3.47,54.55-5.21-12.32-13.05-24.63-26.09-36.95-39.14l-35.4,29.84-35.4-29.84c-12.32,13.05-24.63,26.09-36.95,39.14,18.18,1.74,36.37,3.47,54.55,5.21l-7.39,55.71Z"/><polygon points="136.43 142.93 96.62 123.51 80.35 140.77 136.03 186.86 136.43 142.93"/><path d="m168.35,213.73l-29.96-24.91-19.77,19.98c5.12,9.28,12.08,21.87,17.19,31.15,11.46-4.63,21.07-12.55,32.53-17.18v-9.04Z"/><path d="m141.52,250.13c1.41,5.24,2.81,10.48,4.22,15.72l7.13,4.58h43.24l7.13-4.58c1.41-5.24,2.81-10.48,4.22-15.72-10.99-2.57-21.98-5.13-32.97-7.7-10.99,2.57-21.98,5.13-32.97,7.7Z"/><polygon points="212.95 186.86 268.63 140.77 252.37 123.51 212.56 142.93 212.95 186.86"/><path d="m180.63,213.73v9.04c11.46,4.63,20.68,12.55,32.14,17.18,5.12-9.28,12.47-21.87,17.59-31.15l-19.77-19.98-29.96,24.91Z"/></g></svg></span><span class="wordmark">JEEVES</span></div>
     <h2>Propuesta privada</h2>
     <p>Ingresa la clave que te compartimos por correo para ver tu propuesta.</p>
     <input type="password" id="gate-input" placeholder="Clave de acceso" autocomplete="off">
@@ -194,7 +194,7 @@
 <div class="wrap">
 
   <header>
-    <div class="brand"><span class="lion">🦁</span><span class="wordmark">JEEVES</span></div>
+    <div class="brand"><span class="lion"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 348.98 348.98"><circle cx="174.49" cy="174.49" r="174.49" fill="#020202"/><g fill="#c2ab6d"><path d="m149.3,178.61h50.39l-7.39-55.71c18.18-1.74,36.37-3.47,54.55-5.21-12.32-13.05-24.63-26.09-36.95-39.14l-35.4,29.84-35.4-29.84c-12.32,13.05-24.63,26.09-36.95,39.14,18.18,1.74,36.37,3.47,54.55,5.21l-7.39,55.71Z"/><polygon points="136.43 142.93 96.62 123.51 80.35 140.77 136.03 186.86 136.43 142.93"/><path d="m168.35,213.73l-29.96-24.91-19.77,19.98c5.12,9.28,12.08,21.87,17.19,31.15,11.46-4.63,21.07-12.55,32.53-17.18v-9.04Z"/><path d="m141.52,250.13c1.41,5.24,2.81,10.48,4.22,15.72l7.13,4.58h43.24l7.13-4.58c1.41-5.24,2.81-10.48,4.22-15.72-10.99-2.57-21.98-5.13-32.97-7.7-10.99,2.57-21.98,5.13-32.97,7.7Z"/><polygon points="212.95 186.86 268.63 140.77 252.37 123.51 212.56 142.93 212.95 186.86"/><path d="m180.63,213.73v9.04c11.46,4.63,20.68,12.55,32.14,17.18,5.12-9.28,12.47-21.87,17.59-31.15l-19.77-19.98-29.96,24.91Z"/></g></svg></span><span class="wordmark">JEEVES</span></div>
     <div class="client-badge"><img src="nuvant-logo.png" alt="Nuvant"></div>
   </header>
 
