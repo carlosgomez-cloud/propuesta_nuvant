@@ -220,12 +220,13 @@ footer{padding:44px 0 60px; text-align:center;}
 <!-- ===== HERO ===== -->
 <section class="hero">
 <span class="eyebrow">Propuesta Gold · Nuvant S.A.S.</span>
-<h1>Una línea de <em>USD 1.200.000</em> para tarjetas corporativas y pagos a proveedores con dispersión a cuentas vía Jeeves Pay.</h1>
-<p class="lead">Con la línea ya aprobada, Nuvant puede migrar el uso que hoy tiene con Clara (~USD 300.000 mensuales en tarjetas) hacia una plataforma centralizada, con un Plan Gold que se paga con el cashback, trazabilidad total por usuario y una tasa preferencial en Jeeves Pay para pagos a proveedores.</p>
+<h1>Una línea de <em>USD 500.000</em> para pagar la tesorería de Nuvant con tarjeta corporativa, y Jeeves Pay disponible para pagos a proveedores cuando lo autoricen.</h1>
+<p class="lead">Nuvant arranca con <b style="color:var(--text)">~USD 235.000 al mes</b> en pagos de tesorería con tarjeta: sin intereses hasta 37 días, exención del 4x1000 y 1% de cashback los primeros 6 meses, que paga más de dos veces el Plan Gold. Jeeves Pay queda habilitado en el mismo cupo, sin costo mientras no se use.</p>
 
 <div class="stat-row">
-<div class="stat"><div class="n gold">USD 1.2M</div><div class="l">Línea de crédito aprobada</div></div>
-<div class="stat"><div class="n">Gold</div><div class="l">USD 6.000 al año</div></div>
+<div class="stat"><div class="n gold">USD 500k</div><div class="l">Línea de crédito aprobada</div></div>
+<div class="stat"><div class="n">Gold</div><div class="l">USD 6.000 al año · 5 usuarios</div></div>
+<div class="stat"><div class="n green">USD 235k</div><div class="l">Pagos de tesorería con tarjeta al mes</div></div>
 <div class="stat"><div class="n green" id="heroSubs">—</div><div class="l">Suscripciones Gold que cubre el cashback de 6 meses</div></div>
 <div class="stat"><div class="n gold" id="heroMeses">—</div><div class="l">Tarda Clara en igualar ese cashback</div></div>
 </div>
@@ -258,13 +259,13 @@ footer{padding:44px 0 60px; text-align:center;}
 </div>
 <div class="field">
 <label>TRM del día (COP/USD)</label>
-<div class="prefix"><span>$</span><input type="number" id="trm" value="3100.45" step="0.01"></div>
-<div class="hint">Banco de la República · 16 sep 2026</div>
+<div class="prefix"><span>$</span><input type="number" id="trm" value="3297.07" step="0.01"></div>
+<div class="hint">TRM de referencia · 11 nov 2026 (editable). El plan se pacta en COP a la TRM del día de la firma.</div>
 </div>
 <div class="field">
 <label>Gasto mensual en tarjetas (COP)</label>
-<div class="prefix"><span>$</span><input type="number" id="gastoMensual" value="1000000000" step="10000000"></div>
-<div class="hint">Supuesto de referencia · ajustable según el volumen real que Nuvant migre</div>
+<div class="prefix"><span>$</span><input type="number" id="gastoMensual" value="774811450" step="10000000"></div>
+<div class="hint">USD 235.000 al mes en pagos de tesorería con tarjeta × TRM</div>
 </div>
 <div class="field fixed">
 <label>Gravamen 4x1000 (GMF)</label>
@@ -400,8 +401,8 @@ footer{padding:44px 0 60px; text-align:center;}
 <!-- ===== JEEVES PAY RATE BENEFIT ===== -->
 <section id="jeeves-pay">
 <div class="section-head">
-<h2>Beneficio por disminución de tasa · Jeeves Pay</h2>
-<p>Para los pagos a proveedores que Nuvant dispersa vía Jeeves Pay, conseguimos bajar la tasa mensual a <b style="color:var(--text)">1,8% mensual</b>, más de 6 puntos porcentuales por debajo de la tasa anualizada equivalente que se paga hoy.</p>
+<h2>Jeeves Pay · Opcional, cuando lo autoricen</h2>
+<p>Jeeves Pay queda habilitado dentro del mismo cupo, <b style="color:var(--text)">sin costo mientras no se use</b>. Cuando Nuvant autorice su uso para pagos a proveedores, la tasa es de <b style="color:var(--text)">1,8% mensual</b>, cobrada solo por los días de uso. Este beneficio no está incluido en el ahorro ni en el ROE de la propuesta.</p>
 </div>
 
 <div class="calc-shell">
@@ -433,8 +434,8 @@ footer{padding:44px 0 60px; text-align:center;}
 <div class="calc-grid" style="grid-template-columns:1fr;">
 <div class="field" style="max-width:340px;">
 <label>Monto mensual a dispersar vía Jeeves Pay (COP)</label>
-<div class="prefix"><span>$</span><input type="number" id="montoPayCOP" value="3000000000" step="10000000"></div>
-<div class="hint">Editable — ajústalo al monto que Nuvant necesite mover mensualmente a proveedores</div>
+<div class="prefix"><span>$</span><input type="number" id="montoPayCOP" value="873723550" step="10000000"></div>
+<div class="hint">Referencia: cupo disponible después de tarjetas (USD 265.000 × TRM). Editable</div>
 </div>
 </div>
 
@@ -445,7 +446,7 @@ footer{padding:44px 0 60px; text-align:center;}
 </div>
 
 <div style="margin-top:18px; background:rgba(0,214,143,0.08); border:1px solid rgba(0,214,143,0.25); border-radius:12px; padding:16px 18px; font-size:13px; color:var(--muted); line-height:1.6;">
-<b style="color:var(--green)">Sin comisión de disponibilidad:</b> en la banca tradicional colombiana es práctica común cobrar a las empresas una comisión de disponibilidad (o de compromiso) sobre el cupo <b style="color:var(--text)">no utilizado</b> de una línea de crédito rotativa — un cargo periódico solo por tener los recursos reservados, independiente de si se usan o no. <b style="color:var(--text)">Jeeves no cobra esta comisión:</b> Nuvant no paga nada por tener la línea de USD 1.200.000 disponible; el único costo es la tasa negociada de 1,8% mensual sobre lo que efectivamente dispersa vía Jeeves Pay.
+<b style="color:var(--green)">Sin comisión de disponibilidad:</b> en la banca tradicional colombiana es práctica común cobrar a las empresas una comisión de disponibilidad (o de compromiso) sobre el cupo <b style="color:var(--text)">no utilizado</b> de una línea de crédito rotativa — un cargo periódico solo por tener los recursos reservados, independiente de si se usan o no. <b style="color:var(--text)">Jeeves no cobra esta comisión:</b> Nuvant no paga nada por tener la línea de USD 500.000 disponible; el único costo es la tasa negociada de 1,8% mensual sobre lo que efectivamente dispersa vía Jeeves Pay.
 </div>
 </div>
 </section>
@@ -470,7 +471,7 @@ footer{padding:44px 0 60px; text-align:center;}
 <tr>
 <td class="label">Trazabilidad y control de gasto</td>
 <td class="old">Limitada, sin control por usuario</td>
-<td class="new">Plataforma centralizada, <b>30 usuarios</b>, tarjetas físicas y virtuales, límites configurables</td>
+<td class="new">Plataforma centralizada, <b>5 usuarios</b>, tarjetas físicas y virtuales, límites configurables</td>
 </tr>
 </table>
 </section>
@@ -479,7 +480,7 @@ footer{padding:44px 0 60px; text-align:center;}
 <section id="condiciones">
 <div class="section-head">
 <h2>Condicionamientos del comité de crédito</h2>
-<p>La aprobación de la línea de USD 1.200.000 está sujeta al cumplimiento de las siguientes condiciones definidas por el comité de crédito de Jeeves.</p>
+<p>De acuerdo con los equipos de Underwriting y Riesgo de Jeeves, la línea se aprueba por <b style="color:var(--text)">USD 500.000</b> con las siguientes condiciones.</p>
 </div>
 <div class="calc-shell">
 <div class="savings-grid" style="grid-template-columns:repeat(2,1fr);">
@@ -493,11 +494,11 @@ footer{padding:44px 0 60px; text-align:center;}
 </div>
 <div class="save-card">
 <div class="t">(iii) Suscripción Gold</div>
-<div class="v" style="font-size:14px; font-weight:700; color:var(--text);">Plan Gold activo (USD 6.000/año)</div>
+<div class="v" style="font-size:14px; font-weight:700; color:var(--text);">Plan Gold activo (USD 6.000/año) · 5 usuarios</div>
 </div>
 <div class="save-card">
-<div class="t">(iv) Contrato de uso (70%)</div>
-<div class="v" style="font-size:14px; font-weight:700; color:var(--text);">Compromiso de uso mínimo del 70% de la línea aprobada</div>
+<div class="t">(iv) Contrato de uso (50%)</div>
+<div class="v" style="font-size:14px; font-weight:700; color:var(--text);">Uso mínimo del 50% de la línea: <b style="color:var(--green)">USD 250.000</b></div>
 </div>
 </div>
 </div>
@@ -507,25 +508,25 @@ footer{padding:44px 0 60px; text-align:center;}
 <section id="cierre">
 <div class="close-shell">
 <h2>El valor de activar Nuvant con Jeeves</h2>
-<p class="sub">Con la línea de USD 1.2M ya aprobada, esto es lo que Nuvant captura al activar tarjetas corporativas y Jeeves Pay.</p>
+<p class="sub">Con la línea de USD 500.000 aprobada, esto es lo que Nuvant captura al pagar su tesorería con tarjeta corporativa.</p>
 <div class="close-grid">
 <div class="close-card">
 <div class="ico">💰</div>
 <div class="big" id="closeAhorro">—</div>
-<div class="lbl">Ahorro + beneficio total estimado · Año 1<br>(tarjeta + disminución de tasa Jeeves Pay)</div>
+<div class="lbl">Ahorro total estimado · Año 1<br>(4x1000 + cashback + facturas)</div>
 </div>
 <div class="close-card">
 <div class="ico">📈</div>
 <div class="big" id="closeROE">—</div>
-<div class="lbl">ROE combinado · Año 1<br>frente al costo del Plan Gold</div>
+<div class="lbl">ROE · Año 1<br>frente al costo del Plan Gold</div>
 </div>
 <div class="close-card">
-<div class="ico">⬇️</div>
-<div class="big">7,64 pts</div>
-<div class="lbl">Disminución de tasa Jeeves Pay<br>29,24% EA → 21,6% anualizada</div>
+<div class="ico">🎁</div>
+<div class="big" id="closeSubs">—</div>
+<div class="lbl">Suscripciones Gold que paga<br>el cashback de los primeros 6 meses</div>
 </div>
 </div>
-<p class="cta-line">La línea de <b>USD 1.200.000</b> ya está aprobada. El único paso pendiente es firmar contrato y pagaré, luego activar tarjetas y Jeeves Pay para que Nuvant empiece a capturar este valor desde el primer mes — sin ese paso, el ahorro y el beneficio de tasa se quedan sobre la mesa.</p>
+<p class="cta-line">La línea de <b>USD 500.000</b> ya está aprobada. El paso pendiente es firmar contrato, pagaré y garantía parent, conectar la DIAN y activar las tarjetas para que Nuvant empiece a capturar este ahorro desde el primer mes.</p>
 </div>
 </section>
 
@@ -535,7 +536,7 @@ footer{padding:44px 0 60px; text-align:center;}
 <div class="role">Senior Enterprise Account Executive · Jeeves Colombia</div>
 <div class="mail">carlos.gomez@tryjeeves.com</div>
 </div>
-<p class="assumptions">Cifras de referencia calculadas sobre los supuestos indicados en cada campo (editables). TRM y gasto mensual en tarjetas son supuestos ajustables — no confirmados formalmente con Nuvant. El cashback de Clara (0,10%) es el que reporta Nuvant hoy. El módulo de automatización de facturas usa valores estándar de referencia (salario, facturas/mes, minutos por factura, horas trabajadas) y puede desactivarse. Propuesta preparada para uso interno de Nuvant S.A.S., no constituye una oferta vinculante.</p>
+<p class="assumptions">Cifras de referencia calculadas sobre los supuestos indicados en cada campo (editables). La TRM es de referencia (11 nov 2026) y el gasto mensual en tarjetas corresponde a los ~USD 235.000 de pagos de tesorería que Nuvant iniciará con tarjeta. El beneficio de Jeeves Pay es ilustrativo y no se suma al ahorro ni al ROE. El cashback de Clara (0,10%) es el que reporta Nuvant hoy. El módulo de automatización de facturas usa valores estándar de referencia (salario, facturas/mes, minutos por factura, horas trabajadas) y puede desactivarse. Propuesta preparada para uso interno de Nuvant S.A.S., no constituye una oferta vinculante.</p>
 </footer>
 
 </div>
@@ -682,11 +683,9 @@ document.getElementById('benAnual').textContent = fmtCOP(benAnual);
 document.getElementById('deltaCOP').textContent = fmtCOP(benAnual);
 
 // ---- Strategic close ----
-const combinedTotal1 = totalAno1 + benAnual;
-const combinedNeto1 = combinedTotal1 - costoPlataforma;
-const combinedROE1 = costoPlataforma > 0 ? (combinedNeto1/costoPlataforma*100) : 0;
-document.getElementById('closeAhorro').textContent = fmtCOP(combinedTotal1);
-document.getElementById('closeROE').textContent = fmtPct(combinedROE1,1);
+document.getElementById('closeAhorro').textContent = fmtCOP(totalAno1);
+document.getElementById('closeROE').textContent = fmtPct(roeAno1,1);
+document.getElementById('closeSubs').textContent = fmtNum(subsJ) + ' ×';
 }
 
 document.querySelectorAll('#valorPlan,#trm,#gastoMensual,#claraPct,#salario,#facturas,#minutos,#horas,#montoPayCOP').forEach(el=>{
